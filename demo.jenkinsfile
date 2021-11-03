@@ -10,9 +10,9 @@ pipeline {
             }
         }
         stage('DEV') {
-            when { 
-				expression { params.DEV == 'TRUE' }
-			}
+            //when { 
+			//	expression { params.DEV == 'TRUE' }
+			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile dev.liquibase.properties updateSQL
@@ -20,9 +20,9 @@ pipeline {
             }
         }
         stage('QA'){
-            when { 
-				expression { params.QA == 'TRUE' }
-			}
+           // when { 
+			//	expression { params.QA == 'TRUE' }
+			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile qa.liquibase.properties updateSQL
@@ -30,9 +30,9 @@ pipeline {
             }
         }
         stage('PROD') {
-            when { 
-				expression { params.PROD == 'TRUE' }
-			}
+            //when { 
+			//	expression { params.PROD == 'TRUE' }
+			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile prod.liquibase.properties updateSQL
