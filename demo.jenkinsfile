@@ -1,14 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Pre-Build') {
+        stage('Checkout') {
             steps {
-                sh 'echo "Starting the script"'
-                cleanWs()
-                git branch: 'master', url: 'https://github.com/ro-rah/jenkins-demo.git'
-                
+                checkout([$class: 'GitSCM', branches: [[name: '*/branchname']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-user-github', url: 'https://github.com/ro-rah/jenkins-demo.git']]])
+                sh "ls -lart ./*"
             }
-        }
+		}
         stage('DEV') {
             //when { 
 			//	expression { params.DEV == 'TRUE' }
