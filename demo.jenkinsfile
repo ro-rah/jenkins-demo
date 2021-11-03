@@ -1,16 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/branchname']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-user-github', url: 'https://github.com/ro-rah/jenkins-demo.git']]])
-                sh "ls -lart ./*"
-            }
-		}
         stage('DEV') {
-            //when { 
-			//	expression { params.DEV == 'TRUE' }
-			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile dev.liquibase.properties updateSQL
@@ -18,9 +9,6 @@ pipeline {
             }
         }
         stage('QA'){
-           // when { 
-			//	expression { params.QA == 'TRUE' }
-			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile qa.liquibase.properties updateSQL
@@ -28,9 +16,6 @@ pipeline {
             }
         }
         stage('PROD') {
-            //when { 
-			//	expression { params.PROD == 'TRUE' }
-			//}
 			steps {
                 sh'''
                     liquibase --defaultsFile prod.liquibase.properties updateSQL
