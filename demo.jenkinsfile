@@ -11,8 +11,8 @@ pipeline {
                         parameters([
                             booleanParam(
                                 defaultValue: true, 
-                                description: '', 
-                                name: 'Preview?'
+                                description: 'Would you like to preview but not run changes?', 
+                                name: 'PREVIEW'
                             )
                         ])
                     ])
@@ -21,9 +21,13 @@ pipeline {
         }
         stage('DEV') {
 			steps {
-                sh'''
-                    liquibase --defaultsFile sql/dev.liquibase.properties updateSQL
-                '''
+				script {
+                    if (params.PREVIEW) {
+                        sh "liquibase --defaultsFile sql/dev.liquibase.properties updateSQL"
+                    } else {
+                        sh "liquibase --defaultsFile sql/dev.liquibase.properties update"
+                    }
+                }
             }
         }
         stage('QA'){
