@@ -4,6 +4,21 @@ pipeline {
     PATH = "/opt/liquibase:${env.PATH}"
   }
     stages {
+		stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                            booleanParam(
+                                defaultValue: true, 
+                                description: '', 
+                                name: 'Preview?'
+                            )
+                        ])
+                    ])
+                }
+            }
+        }
         stage('DEV') {
 			steps {
                 sh'''
