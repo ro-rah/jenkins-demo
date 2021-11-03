@@ -32,16 +32,24 @@ pipeline {
         }
         stage('QA'){
 			steps {
-                sh'''
-                    liquibase --defaultsFile sql/qa.liquibase.properties updateSQL
-                '''
+				script {
+                    if (params.PREVIEW) {
+                        sh "liquibase --defaultsFile sql/qa.liquibase.properties updateSQL"
+                    } else {
+                        sh "liquibase --defaultsFile sql/qa.liquibase.properties update"
+                    }
+                }
             }
         }
         stage('PROD') {
 			steps {
-                sh'''
-                    liquibase --defaultsFile sql/prod.liquibase.properties updateSQL
-                '''
+				script {
+                    if (params.PREVIEW) {
+                        sh "liquibase --defaultsFile sql/prod.liquibase.properties updateSQL"
+                    } else {
+                        sh "liquibase --defaultsFile sql/prod.liquibase.properties update"
+                    }
+                }
             }
         }
     }
