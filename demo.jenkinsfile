@@ -10,18 +10,17 @@ pipeline {
             }
         }
         stage('DEV') {
-            when { 
-				environment name: 'Deploy to DEV', value: 'TRUE' 
-			}
-			steps {
-                sh'''
-                    liquibase --defaultsFile dev.liquibase.properties updateSQL
-                '''
+            steps {
+				if (env.DEV == TRUE){
+					sh'''
+						liquibase --defaultsFile dev.liquibase.properties updateSQL
+					'''
+				}
             }
         }
         stage('QA'){
             when { 
-				environment name: 'Deploy to QA', value: 'TRUE' 
+				environment name: 'QA', value: 'TRUE' 
 			}
 			steps {
                 sh'''
@@ -31,7 +30,7 @@ pipeline {
         }
         stage('PROD') {
             when { 
-				environment name: 'Deploy to PROD', value: 'TRUE' 
+				environment name: 'PROD', value: 'TRUE' 
 			}
 			steps {
                 sh'''
