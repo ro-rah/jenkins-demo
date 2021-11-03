@@ -7,21 +7,21 @@ pipeline {
         stage('DEV') {
 			steps {
                 sh'''
-                    liquibase --defaultsFile dev.liquibase.properties updateSQL
+                    liquibase --defaultsFile sql/dev.liquibase.properties updateSQL
                 '''
             }
         }
         stage('QA'){
 			steps {
                 sh'''
-                    liquibase --defaultsFile qa.liquibase.properties updateSQL
+                    liquibase --defaultsFile sql/qa.liquibase.properties updateSQL
                 '''
             }
         }
         stage('PROD') {
 			steps {
                 sh'''
-                    liquibase --defaultsFile prod.liquibase.properties updateSQL
+                    liquibase --defaultsFile sql/prod.liquibase.properties updateSQL
                 '''
             }
         }
