@@ -11,7 +11,7 @@ pipeline {
         }
         stage('DEV') {
             when { 
-				params.DEV == 'TRUE' 
+				expression { params.DEV == 'TRUE' }
 			}
 			steps {
                 sh'''
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('QA'){
             when { 
-				params.QA == 'TRUE' 
+				expression { params.QA == 'TRUE' }
 			}
 			steps {
                 sh'''
@@ -31,7 +31,7 @@ pipeline {
         }
         stage('PROD') {
             when { 
-				params.PROD == 'TRUE'
+				expression { params.PROD == 'TRUE' }
 			}
 			steps {
                 sh'''
