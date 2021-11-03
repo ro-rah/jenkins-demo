@@ -1,5 +1,8 @@
 pipeline {
     agent any
+	environment {
+    PATH = "/opt/liquibase:${env.PATH}"
+  }
     stages {
         stage('DEV') {
 			steps {
